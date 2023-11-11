@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@mui/icons-material": "^5.14.16",
+    "caniuse-lite": "^1.0.30001561",
     "next": "14.0.1",
     "react": "^18",
     "react-dom": "^18"
