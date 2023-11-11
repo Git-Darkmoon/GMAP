@@ -1,23 +1,45 @@
-function Home() {
+import Image from "next/image"
+
+function LoginPage() {
   return (
-    <main className="pt-20 pl-72">
-      <h1>Hello world</h1>
-      Lorem ipsum dolor sit, amet consectetur adipisicing elit. Eos porro
-      obcaecati, ad, possimus doloribus aspernatur fugit, error nostrum earum
-      facilis voluptatum qui maxime. Quos porro itaque, exercitationem veritatis
-      perferendis quasi labore ex, molestias et molestiae similique.
-      Dignissimos, eligendi aspernatur. Asperiores expedita distinctio corrupti
-      tempore similique illum officiis nobis tempora voluptate, cum voluptatibus
-      fugit quam veritatis laborum. Placeat corporis ipsa nostrum voluptates
-      fugit minima dicta, libero in minus quas, beatae eveniet alias. Delectus
-      cumque quas ducimus unde iste hic minus quos debitis molestias! Porro
-      voluptatum reprehenderit blanditiis voluptatibus, mollitia natus cum,
-      nobis explicabo est laudantium, qui architecto culpa. Iste, doloremque
-      laudantium!
-    </main>
+    <div className="flex items-center min-h-screen bg-gray-50">
+      <div className="flex-1 h-full max-w-4xl mx-auto bg-white rounded-lg shadow-xl">
+        <div className="flex flex-col md:flex-row">
+          <div className="h-32 md:h-auto md:w-1/2">
+            <Image
+              className="object-cover w-full h-full"
+              src="/Login_image.webp"
+              alt="img"
+              width={500}
+              height={500}
+              priority
+            />
+          </div>
+          <div className="flex items-center justify-center p-6 sm:p-12 md:w-1/2">
+            <div className="w-full">
+              <div className="flex justify-center">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="w-20 h-20 text-blue-600"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  {/* ... (SVG paths) */}
+                </svg>
+              </div>
+              <h1 className="mb-4 text-2xl font-bold text-center text-gray-700">
+                Login to Your Account
+              </h1>
+              {/* ... (Rest of the HTML code) */}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   )
 }
-export default Home
+export default LoginPage
 
 {
   /* <div className="fixed inset-0 z-10 hidden bg-gray-900/50 dark:bg-gray-900/90" id="sidebarBackdrop"></div> */
