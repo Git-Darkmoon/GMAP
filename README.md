@@ -1,6 +1,6 @@
 # GMAP Web Application
 
-![Project Logo](./public/GMAP_logo.png)
+![Project Logo](./public/GMAP_logo.webp)
 
 ## Overview
 
