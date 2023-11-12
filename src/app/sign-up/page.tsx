@@ -1,6 +1,9 @@
 import Image from "next/image"
 import Link from "next/link"
 
+const inputStyle: string =
+  "mt-1 p-2 w-full border rounded-md text-slate-600 focus:border-myOrange-400 focus:outline-none focus:ring-1 focus:ring-myOrange-500 focus:shadow-md"
+
 function RegisterPage() {
   return (
     <section className="w-full h-screen flex flex-col items-center justify-center">
@@ -44,7 +47,7 @@ function RegisterPage() {
                     id="firstName"
                     name="firstName"
                     placeholder="Pedro"
-                    className="mt-1 p-2 w-full border rounded-md text-slate-600 focus:border-myOrange-400 focus:outline-none focus:ring-1 focus:ring-myOrange-500 focus:shadow-md"
+                    className={inputStyle}
                     required
                   />
                 </div>
@@ -60,7 +63,7 @@ function RegisterPage() {
                     id="lastName"
                     name="lastName"
                     placeholder="Martinez"
-                    className="mt-1 p-2 w-full border rounded-md text-slate-600 focus:border-myOrange-400 focus:outline-none focus:ring-1 focus:ring-myOrange-500 focus:shadow-md"
+                    className={inputStyle}
                     required
                   />
                 </div>
@@ -77,7 +80,7 @@ function RegisterPage() {
                 id="email"
                 name="email"
                 placeholder="example@example.com"
-                className="mt-1 p-2 w-full border rounded-md text-slate-600 focus:border-myOrange-400 focus:outline-none focus:ring-1 focus:ring-myOrange-500 focus:shadow-md"
+                className={inputStyle}
                 required
               />
 
@@ -91,7 +94,7 @@ function RegisterPage() {
                 type="password"
                 id="password"
                 name="password"
-                className="mt-1 p-2 w-full border rounded-md text-slate-600 focus:border-myOrange-400 focus:outline-none focus:ring-1 focus:ring-myOrange-500 focus:shadow-md"
+                className={inputStyle}
                 required
               />
               <Link
