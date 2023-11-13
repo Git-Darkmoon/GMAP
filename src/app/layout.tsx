@@ -17,9 +17,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body
-        className={`${inter.className} bg-slate-50 text-slate-900 dark:text-slate-300`}
-      >
+      <body className={`${inter.className} bg-white text-slate-800`}>
         <NextTopLoader color="#f48c2a" />
         {children}
       </body>
