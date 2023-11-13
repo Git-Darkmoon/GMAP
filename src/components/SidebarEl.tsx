@@ -11,7 +11,7 @@ export default function SidebarEl({ icon, text }: SidebarElType) {
     <li>
       <button
         type="button"
-        className="flex items-center w-full p-2 text-base text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-700"
+        className="flex items-center w-full p-2 text-base text-slate-600 hover:bg-slate-100 hover:text-slate-900 transition duration-75 rounded-lg group "
         aria-controls="dropdown-pages"
         data-collapse-toggle="dropdown-pages"
       >
