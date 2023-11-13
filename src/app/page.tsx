@@ -18,9 +18,9 @@ function LoginPage() {
               priority
             />
           </div>
-          <div className="flex items-center justify-center p-6 sm:p-12 md:w-1/2">
+          <div className="flex items-center justify-center p-6 sm:p-12 md:w-1/2 ">
             <div className="w-full">
-              <div className="flex justify-center">
+              <div className="flex justify-center ">
                 <Image
                   src={"/GMAP_logo_withouthBg.webp"}
                   alt="GMAP Logo"
@@ -32,22 +32,22 @@ function LoginPage() {
               <h1 className="mb-4 text-2xl font-bold text-center text-slate-700">
                 Inicia sesion en tu cuenta
               </h1>
-              <div>
+              <div className="space-y-2">
                 <label
                   className="block text-sm text-slate-500"
-                  htmlFor="login_email"
+                  htmlFor="login_id"
                 >
-                  Email
+                  Codigo Estudiantil
                 </label>
                 <input
-                  id="login_email"
-                  type="email"
+                  id="login_id"
+                  type="number"
                   className="w-full px-4 py-2 text-sm text-slate-500 border rounded-md focus:border-myOrange-400 focus:outline-none focus:ring-1 focus:ring-myOrange-500 focus:shadow-md"
-                  placeholder="example@gmail.com"
+                  placeholder="20181020172"
                   required
                 />
               </div>
-              <div>
+              <div className="space-y-2">
                 <label
                   className="block mt-4 text-sm text-slate-500"
                   htmlFor="login_password"
@@ -58,6 +58,7 @@ function LoginPage() {
                   id="login_password"
                   className="w-full px-4 py-2 text-sm text-slate-500 border rounded-md focus:border-myOrange-400 focus:outline-none focus:ring-1 focus:ring-myOrange-500 focus:shadow-md"
                   type="password"
+                  placeholder="********"
                   pattern="^(?=.*[A-Z])(?=.*\d).{8,}$"
                   title="La contraseña debe incluir una mayuscula, un numero y debe ser de 8 caracteres minimo. "
                 />
