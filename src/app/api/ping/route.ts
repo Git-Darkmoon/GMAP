@@ -1,11 +1,11 @@
-import { NextResponse } from "next/server"
-
 import { connection } from "@/utils/database"
 
-export async function GET(res: NextResponse) {
-  const response = await connection.query("SELECT * FROM maratonistas")
+export async function GET(request: Response) {
+  const response = await connection.query("SELECT NOW ()")
 
   console.log(response)
 
-  return NextResponse.json({ message: "pong", data: response.rows[0] })
+  return new Response(
+    JSON.stringify({ message: "pong", time: response.rows[0].now })
+  )
 }
