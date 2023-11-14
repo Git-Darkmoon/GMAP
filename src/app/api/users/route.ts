@@ -1,37 +1,60 @@
 import { connection } from "@/utils/database"
-import { NextRequest, NextResponse } from "next/server"
+import { NextResponse } from "next/server"
 
-export async function GET(res: NextResponse) {
+export async function GET(request: Response) {
   const response = await connection.query("SELECT * FROM maratonistas")
 
-  return NextResponse.json({ message: "Getting Users", data: response.rows[0] })
-}
-
-export async function POST(req: NextRequest, res: NextResponse) {
-  const query = await connection.query(
-    "INSERT INTO maratonistas (student_id,first_name, last_name, email, password, team, asignature_check) VALUES ($1, $2, $3, $4, $5, $6)"
+  return new Response(
+    JSON.stringify({ message: "Getting Users", data: response.rows[0] })
   )
-
-  const values = [
-    20201034098,
-    "Andres",
-    "Velasquez",
-    "namayorgav@outlook.com",
-    "Pizza_011",
-    1,
-    "programacion basica",
-  ]
-
-  const response = await connection.query(query, values)
-
-  console.log(response)
-
-  return NextResponse.json({ message: "Creating Users" })
 }
 
-export async function PUT(res: NextResponse) {
-  return NextResponse.json({ message: "Updating Users" })
+export async function POST(request: NextResponse) {
+  const body = await request.json()
+
+  const {
+    student_id,
+    first_name,
+    last_name,
+    email,
+    password,
+    team,
+    course_check,
+  } = body
+
+  try {
+    const insertQuery =
+      "INSERT INTO maratonistas (student_id, first_name, last_name, email, password, team, course_check) VALUES ($1, $2, $3, $4, $5, $6, $7)"
+
+    const values = [
+      student_id,
+      first_name,
+      last_name,
+      email,
+      password,
+      team,
+      course_check,
+    ]
+
+    const response = await connection.query(insertQuery, values)
+
+    return NextResponse.json({
+      message: "User created successfully",
+      data: response.rows[0],
+    })
+  } catch (error) {
+    return new NextResponse(
+      JSON.stringify({ message: "Error inserting data" }),
+      {
+        status: 500,
+      }
+    )
+  }
 }
-export async function DELETE(res: NextResponse) {
-  return NextResponse.json({ message: "Deleting Users" })
+
+export async function PUT(request: Response) {
+  return new Response(JSON.stringify({ message: "Updating Users" }))
+}
+export async function DELETE(request: Response) {
+  return new Response(JSON.stringify({ message: "Deleting Users" }))
 }
