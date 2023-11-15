@@ -1,13 +1,13 @@
 import { connection } from "@/utils/database"
-import { NextResponse } from "next/server"
+import { NextRequest, NextResponse } from "next/server"
 
-export async function GET(request: NextResponse) {
+export async function GET(request: NextRequest) {
   const response = await connection.query("SELECT * FROM maratonistas")
 
   return NextResponse.json({ message: "Getting Users", data: response.rows })
 }
 
-export async function POST(request: NextResponse) {
+export async function POST(request: NextRequest) {
   const body = await request.json()
 
   const {
@@ -48,12 +48,4 @@ export async function POST(request: NextResponse) {
       }
     )
   }
-}
-
-export async function PUT(request: Response) {
-  return new Response(JSON.stringify({ message: "Updating Users" }))
-}
-
-export async function DELETE(request: Response) {
-  return new Response(JSON.stringify({ message: "Deleting Users" }))
 }
