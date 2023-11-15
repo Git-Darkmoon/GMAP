@@ -44,9 +44,7 @@ function Sidebar() {
                 className="flex items-center p-2 text-base text-slate-600 transition duration-75 rounded-lg hover:text-slate-900 hover:bg-slate-100 group"
               >
                 <GitHubIcon />
-                <span className="ml-3" sidebar-toggle-item>
-                  GitHub Repository
-                </span>
+                <span className="ml-3">GitHub Repository</span>
               </a>
             </div>
           </div>
