@@ -1,11 +1,11 @@
 import { connection } from "@/utils/database"
+import { NextRequest, NextResponse } from "next/server"
 
-export async function GET(request: Response) {
+export async function GET(request: NextRequest) {
   const response = await connection.query("SELECT NOW ()")
 
-  console.log(response)
-
-  return new Response(
-    JSON.stringify({ message: "pong", time: response.rows[0].now })
-  )
+  return NextResponse.json({
+    message: "pong",
+    isDB_connected: response.rows[0].now,
+  })
 }
