@@ -1,5 +1,29 @@
+"use client"
+
+import { Maratonista } from "@/utils/userType"
 import Image from "next/image"
 import Link from "next/link"
+
+// complete method
+
+// async function createUser({
+//   student_id,
+//   first_name,
+//   last_name,
+//   password,
+//   email,
+//   team,
+//   course_check,
+// }: Maratonista) {
+//   const request = await fetch("http://localhost:3000/api/users", {
+//     method: "POST",
+//     headers: {
+//       'content-type': 'application/json',
+
+//     },
+//     body: JSON.stringify()
+//   })
+// }
 
 const inputStyle: string =
   "mt-1 p-2 w-full border rounded-md text-slate-600 focus:border-myOrange-400 focus:outline-none focus:ring-1 focus:ring-myOrange-500 focus:shadow-md"
