@@ -1,12 +1,10 @@
 import { connection } from "@/utils/database"
 import { NextResponse } from "next/server"
 
-export async function GET(request: Response) {
+export async function GET(request: NextResponse) {
   const response = await connection.query("SELECT * FROM maratonistas")
 
-  return new Response(
-    JSON.stringify({ message: "Getting Users", data: response.rows[0] })
-  )
+  return NextResponse.json({ message: "Getting Users", data: response.rows })
 }
 
 export async function POST(request: NextResponse) {
@@ -55,6 +53,7 @@ export async function POST(request: NextResponse) {
 export async function PUT(request: Response) {
   return new Response(JSON.stringify({ message: "Updating Users" }))
 }
+
 export async function DELETE(request: Response) {
   return new Response(JSON.stringify({ message: "Deleting Users" }))
 }
