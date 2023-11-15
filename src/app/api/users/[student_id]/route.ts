@@ -1,7 +1,7 @@
 import { connection } from "@/utils/database"
-import { NextResponse } from "next/server"
+import { NextRequest, NextResponse } from "next/server"
 
-export async function GET(request: NextResponse, { params }: any) {
+export async function GET(request: NextRequest, { params }: any) {
   try {
     const singleGetQuery = "SELECT * FROM maratonistas WHERE student_id = $1"
     const singleQueryValue = [Number(params.student_id)]
@@ -25,7 +25,7 @@ export async function GET(request: NextResponse, { params }: any) {
   }
 }
 
-export async function PUT(request: NextResponse, { params }: any) {
+export async function PUT(request: NextRequest, { params }: any) {
   const body = await request.json()
 
   const { first_name, last_name, email, password, team, course_check } = body
@@ -62,7 +62,7 @@ export async function PUT(request: NextResponse, { params }: any) {
   }
 }
 
-export async function DELETE(request: NextResponse, { params }: any) {
+export async function DELETE(request: NextRequest, { params }: any) {
   try {
     const singleGetQuery =
       "DELETE FROM maratonistas WHERE student_id = $1 RETURNING *"
