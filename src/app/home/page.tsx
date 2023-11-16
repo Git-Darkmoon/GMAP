@@ -6,7 +6,7 @@ import { Maratonista } from "@/utils/userType"
 import TableHeadEl from "@/components/TableHeadEl"
 
 async function getAllMaratonistas() {
-  const res = await fetch("http://localhost:3000/api/users")
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}`)
   const users = await res.json()
   return users
 }
@@ -59,7 +59,7 @@ async function HomePage() {
           </div>
           <div className="items-center justify-between block sm:flex md:divide-x md:divide-gray-100">
             <div className="flex items-center mb-4 sm:mb-0 gap-12 sm:gap-0">
-              <form className="sm:pr-3" action="#" method="GET">
+              <form className="sm:pr-3">
                 <label htmlFor="products-search" className="sr-only">
                   Search
                 </label>
@@ -87,10 +87,10 @@ async function HomePage() {
               id="createProductButton"
               className="text-slate-700 bg-myOrange-300 hover:bg-myOrange-400 hover:shadow-sm hover:text-slate-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 transition-all"
               type="button"
-              data-drawer-target="drawer-create-product-default"
-              data-drawer-show="drawer-create-product-default"
-              aria-controls="drawer-create-product-default"
-              data-drawer-placement="right"
+              // data-drawer-target="drawer-create-product-default"
+              // data-drawer-show="drawer-create-product-default"
+              // aria-controls="drawer-create-product-default"
+              // data-drawer-placement="right"
             >
               Añadir Maratonista
             </button>
