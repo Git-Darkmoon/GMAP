@@ -1,29 +1,42 @@
 "use client"
-
-import { Maratonista } from "@/utils/userType"
+// import { Maratonista } from "@/utils/userType"
 import Image from "next/image"
 import Link from "next/link"
+import { useRouter } from "next/navigation"
+import { FormEvent } from "react"
+import Swal from "sweetalert2"
 
-// complete method
+async function createUser(maratonista: any) {
+  await fetch(`${process.env.NEXT_PUBLIC_API_URL}`, {
+    method: "POST",
+    headers: {
+      "content-type": "application/json",
+    },
+    body: JSON.stringify(maratonista),
+  })
+}
 
-// async function createUser({
-//   student_id,
-//   first_name,
-//   last_name,
-//   password,
-//   email,
-//   team,
-//   course_check,
-// }: Maratonista) {
-//   const request = await fetch("http://localhost:3000/api/users", {
-//     method: "POST",
-//     headers: {
-//       'content-type': 'application/json',
+const handleSubmit = async (e: FormEvent<HTMLFormElement>, router: any) => {
+  e.preventDefault()
+  const formData = new FormData(e.currentTarget)
+  const newUser = Object.fromEntries(formData)
 
-//     },
-//     body: JSON.stringify()
-//   })
-// }
+  try {
+    createUser(newUser)
+
+    Swal.fire({
+      title: "Usuario agregado satisfactoriamente",
+      icon: "success",
+      confirmButtonText: "Ok",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        router.push("/")
+      }
+    })
+  } catch (error) {
+    console.error(error)
+  }
+}
 
 const inputStyle: string =
   "mt-1 p-2 w-full border rounded-md text-slate-600 focus:border-myOrange-400 focus:outline-none focus:ring-1 focus:ring-myOrange-500 focus:shadow-md"
@@ -36,15 +49,16 @@ const signatures: string[] = [
 ]
 
 function RegisterPage() {
+  const router = useRouter()
+
   return (
     <section className="w-full h-screen flex flex-col items-center justify-center">
       <picture>
         <Image
           src={"/SignUp_imageSun.webp"}
           alt="sunset sign up"
-          className="block w-screen h-[300px]"
-          objectFit="cover"
-          layout="fill"
+          className="block bg-cover"
+          fill={true}
           priority
         />
       </picture>
@@ -62,27 +76,47 @@ function RegisterPage() {
               <Image
                 src={"/GMAP_logo_withouthBg.webp"}
                 alt="GMAP logo"
-                width={100}
-                height={120}
+                width={75}
+                height={100}
                 priority
               />
             </picture>
             <h2 className="text-3xl text-center font-semibold mb-5 text-slate-800">
               Registrate Ahora
             </h2>
-            <form className="space-y-3">
+            <form
+              className="space-y-3"
+              onSubmit={(e) => handleSubmit(e, router)}
+            >
               <div className="flex space-x-4 flex-wrap">
+                <div className="flex-1">
+                  <label
+                    htmlFor="student_id"
+                    className="block text-sm font-medium text-gray-700"
+                  >
+                    Codigo Estudiantil
+                  </label>
+                  <input
+                    type="number"
+                    id="student_id"
+                    name="student_id"
+                    placeholder="20181020172"
+                    className={inputStyle}
+                    pattern="^[1-9]\d*$"
+                    required
+                  />
+                </div>
                 <div className="flex-1 ">
                   <label
-                    htmlFor="firstName"
+                    htmlFor="first_name"
                     className="block text-sm font-medium text-gray-700"
                   >
                     Primer Nombre
                   </label>
                   <input
                     type="text"
-                    id="firstName"
-                    name="firstName"
+                    id="first_name"
+                    name="first_name"
                     placeholder="Pedro"
                     className={inputStyle}
                     required
@@ -90,34 +124,17 @@ function RegisterPage() {
                 </div>
                 <div className="flex-1">
                   <label
-                    htmlFor="lastName"
+                    htmlFor="last_name"
                     className="block text-sm font-medium text-gray-700"
                   >
                     Primer Apellido
                   </label>
                   <input
                     type="text"
-                    id="lastName"
-                    name="lastName"
+                    id="last_name"
+                    name="last_name"
                     placeholder="Martinez"
                     className={inputStyle}
-                    required
-                  />
-                </div>
-                <div className="flex-1">
-                  <label
-                    htmlFor="lastName"
-                    className="block text-sm font-medium text-gray-700"
-                  >
-                    Codigo Estudiantil
-                  </label>
-                  <input
-                    type="number"
-                    id="lastName"
-                    name="lastName"
-                    placeholder="20181020172"
-                    className={inputStyle}
-                    pattern="^[1-9]\d*$"
                     required
                   />
                 </div>
@@ -177,16 +194,16 @@ function RegisterPage() {
                     ))}
                   </select>
                 </div>
-                <div className="flex-1">
+                <div className="flex-1 basis-16">
                   <label
-                    htmlFor="signature"
+                    htmlFor="course_check"
                     className="block text-sm font-medium text-gray-700"
                   >
                     Ultima materia cursada / cursando
                   </label>
                   <select
-                    id="signature"
-                    name="signature"
+                    id="course_check"
+                    name="course_check"
                     className={inputStyle}
                     required
                   >
@@ -203,7 +220,7 @@ function RegisterPage() {
                 <input
                   type="checkbox"
                   id="subscribe"
-                  name="subscribe"
+                  // name="subscribe"
                   className="h-4 w-4 accent-myOrange-400 border-gray-300 rounded focus:border-myOrange-400 focus:outline-none focus:ring-1 focus:ring-myOrange-500 focus:shadow-md"
                   required
                 />
