@@ -37,19 +37,9 @@ const Navbar = () => {
         >
           <NightsStayRoundedIcon />
         </button>
-        <div
-          id="tooltip-toggle"
-          role="tooltip"
-          className="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip"
-        >
-          Toggle dark mode
-          <div className="tooltip-arrow" data-popper-arrow></div>
-        </div>
       </div>
     </nav>
   )
 }
-
-//https://flowbite.com/docs/images/people/profile-picture-5.jpg
 
 export default Navbar
