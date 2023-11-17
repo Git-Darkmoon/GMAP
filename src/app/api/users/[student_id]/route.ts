@@ -8,9 +8,12 @@ export async function GET(request: NextRequest, { params }: any) {
     const response = await connection.query(singleGetQuery, singleQueryValue)
 
     if (response.rows.length === 0)
-      return new NextResponse(JSON.stringify({ message: "User not found" }), {
-        status: 404,
-      })
+      return new NextResponse(
+        JSON.stringify({ message: "Usuario no encontrado" }),
+        {
+          status: 404,
+        }
+      )
 
     return NextResponse.json({
       message: `User found in the Database`,
