@@ -7,8 +7,12 @@ import TableRowEl from "@/components/TableRowEl"
 import { Maratonista } from "@/utils/userType"
 import TableHeadEl from "@/components/TableHeadEl"
 import { useEffect, useState } from "react"
+import EditModal from "@/components/EditModal"
+import { useGlobalContext } from "@/utils/context"
 
 function HomePage() {
+  const { isModalOpen } = useGlobalContext()
+
   const [maratonistas, setMaratonistas] = useState<Maratonista[]>([])
 
   useEffect(() => {
@@ -36,10 +40,13 @@ function HomePage() {
     "Email",
     "Equipo",
     "Acceso a",
+    "Acciones",
   ]
 
   return (
     <main className="lg:pt-16 lg:pl-64">
+      {isModalOpen && <EditModal />}
+
       {/* Header code */}
 
       <header className="p-4 pt-20 lg:pt-0 bg-white block sm:flex items-center justify-between border-b border-gray-200 lg:mt-1.5">
@@ -73,7 +80,7 @@ function HomePage() {
               Todos los maratonistas
             </h1>
           </div>
-          <div className="items-center justify-between block sm:flex md:divide-x md:divide-gray-100">
+          {/* <div className="items-center justify-between block sm:flex md:divide-x md:divide-gray-100">
             <div className="flex items-center mb-4 sm:mb-0 gap-12 sm:gap-0">
               <form className="sm:pr-3">
                 <label htmlFor="products-search" className="sr-only">
@@ -106,11 +113,12 @@ function HomePage() {
             >
               Añadir Maratonista
             </button>
-          </div>
+          </div> */}
         </div>
       </header>
 
       {/* Table Code */}
+
       <section className="relative overflow-x-auto shadow-md sm:rounded-lg">
         <table className="w-full text-sm text-left">
           <thead className="text-xs text-gray-700 uppercase bg-gray-50">
@@ -121,6 +129,7 @@ function HomePage() {
               })}
             </tr>
           </thead>
+
           <tbody>
             {maratonistas?.map((maratonista: Maratonista) => {
               return (
