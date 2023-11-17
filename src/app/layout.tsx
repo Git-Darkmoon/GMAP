@@ -2,6 +2,7 @@ import type { Metadata } from "next"
 import { Inter } from "next/font/google"
 import NextTopLoader from "nextjs-toploader"
 import "./globals.css"
+import { AppProvider } from "@/utils/context"
 
 const inter = Inter({ subsets: ["latin"] })
 
@@ -19,11 +20,13 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en">
-      <body className={`${inter.className} bg-white text-slate-800`}>
-        <NextTopLoader color="#f48c2a" />
-        {children}
-      </body>
-    </html>
+    <AppProvider>
+      <html lang="en">
+        <body className={`${inter.className} bg-white text-slate-800`}>
+          <NextTopLoader color="#f48c2a" />
+          {children}
+        </body>
+      </html>
+    </AppProvider>
   )
 }
