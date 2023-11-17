@@ -7,7 +7,7 @@ import { FormEvent } from "react"
 import Swal from "sweetalert2"
 
 async function createUser(maratonista: any) {
-  await fetch(`${process.env.NEXT_PUBLIC_API_URL}`, {
+  await fetch(`/api/users`, {
     method: "POST",
     headers: {
       "content-type": "application/json",

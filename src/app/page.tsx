@@ -15,15 +15,23 @@ const handleSubmit = async (
   router: any
 ) => {
   e.preventDefault()
-  const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/${ID}`)
-  const singleUser = await response.json()
+  try {
+    const response = await fetch(`/api/users/${ID}`)
+    const singleUser = await response.json()
 
-  if (PW === singleUser.data.password) {
-    router.push("/home")
-  } else {
+    if (PW === singleUser?.data?.password) {
+      router.push("/home")
+    } else {
+      Swal.fire({
+        title: "Datos invalidos",
+        text: "Comprueba tu información",
+        icon: "warning",
+      })
+    }
+  } catch (error) {
     Swal.fire({
-      title: "Datos invalidos",
-      text: "Comprueba tu información",
+      title: "Usuario no encontrado",
+      text: "Comprueba tu información o crea una cuenta",
       icon: "warning",
     })
   }

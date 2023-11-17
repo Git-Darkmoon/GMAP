@@ -1,18 +1,34 @@
+"use client"
+
 import HomeIcon from "@mui/icons-material/Home"
 import KeyboardArrowRightRoundedIcon from "@mui/icons-material/KeyboardArrowRightRounded"
 import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined"
 import TableRowEl from "@/components/TableRowEl"
 import { Maratonista } from "@/utils/userType"
 import TableHeadEl from "@/components/TableHeadEl"
+import { useEffect, useState } from "react"
 
-async function getAllMaratonistas() {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}`)
-  const users = await res.json()
-  return users
-}
+function HomePage() {
+  const [maratonistas, setMaratonistas] = useState<Maratonista[]>([])
 
-async function HomePage() {
-  const maratonistas = await getAllMaratonistas()
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch("/api/users")
+        if (!response.ok) {
+          throw new Error("Network response was not ok")
+        }
+
+        const users = await response.json()
+
+        setMaratonistas(users.data)
+      } catch (error) {
+        console.error("Error fetching data:", error)
+      }
+    }
+
+    fetchData()
+  }, []) // The empty dependency array ensures that this effect runs once after the initial render
 
   const thTitles: string[] = [
     "Nombre Completo",
@@ -87,10 +103,6 @@ async function HomePage() {
               id="createProductButton"
               className="text-slate-700 bg-myOrange-300 hover:bg-myOrange-400 hover:shadow-sm hover:text-slate-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 transition-all"
               type="button"
-              // data-drawer-target="drawer-create-product-default"
-              // data-drawer-show="drawer-create-product-default"
-              // aria-controls="drawer-create-product-default"
-              // data-drawer-placement="right"
             >
               Añadir Maratonista
             </button>
@@ -110,7 +122,7 @@ async function HomePage() {
             </tr>
           </thead>
           <tbody>
-            {maratonistas.data.map((maratonista: Maratonista) => {
+            {maratonistas?.map((maratonista: Maratonista) => {
               return (
                 <TableRowEl key={maratonista.student_id} {...maratonista} />
               )
