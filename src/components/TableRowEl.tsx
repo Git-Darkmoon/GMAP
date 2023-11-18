@@ -27,7 +27,7 @@ function TableRowEl({
   team,
   course_check,
 }: Maratonista) {
-  const { openModal } = useGlobalContext()
+  const { openModal, setEditStudentId } = useGlobalContext()
 
   return (
     <tr className="bg-white border-b hover:bg-myOrange-50 transition-colors">
@@ -44,7 +44,10 @@ function TableRowEl({
       <td className="flex items-center justify-center px-6 py-4 gap-3">
         <button
           className="font-medium px-5 py-2 bg-slate-800 text-slate-200 hover:bg-slate-700 rounded-sm transition-colors"
-          onClick={openModal}
+          onClick={() => {
+            openModal()
+            setEditStudentId(student_id)
+          }}
         >
           Editar
         </button>

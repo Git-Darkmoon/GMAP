@@ -6,7 +6,7 @@ const AppContext = createContext()
 
 export function AppProvider({ children }) {
   const [isModalOpen, setIsModalOpen] = useState(false)
-  // const [editStudentId, setEditStudentId] = useState()
+  const [editStudentId, setEditStudentId] = useState()
 
   function openModal() {
     setIsModalOpen(true)
@@ -21,6 +21,8 @@ export function AppProvider({ children }) {
         isModalOpen,
         openModal,
         closeModal,
+        editStudentId,
+        setEditStudentId,
       }}
     >
       {children}

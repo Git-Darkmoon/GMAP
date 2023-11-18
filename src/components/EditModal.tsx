@@ -3,30 +3,47 @@ import { useGlobalContext } from "@/utils/context"
 import CloseRoundedIcon from "@mui/icons-material/CloseRounded"
 import VisibilityRoundedIcon from "@mui/icons-material/VisibilityRounded"
 import VisibilityOffRoundedIcon from "@mui/icons-material/VisibilityOffRounded"
-import { useState } from "react"
+import { FormEvent, useState } from "react"
 import Swal from "sweetalert2"
 
-// const handleEditSubmit = async (userId: number) => {
-//   const formData = new FormData()
+const handleEditSubmit = async (
+  e: FormEvent<HTMLFormElement>,
+  userId: number,
+  closeModal: any
+) => {
+  e.preventDefault()
+  const formData = new FormData(e.currentTarget)
+  const updatedData = Object.fromEntries(formData)
 
-//   await fetch(`/api/users/${userId}`, {
-//     method: "PUT",
-//     body: formData,
-//   })
-//   Swal.fire({
-//     title: "Datos editados",
-//     icon: "success",
-//     confirmButtonText: "Ok",
-//   }).then((result) => {
-//     if (result.isConfirmed) {
-//       window.location.reload()
-//     }
-//   })
-// }
+  const { first_name, last_name, password } = updatedData
+
+  await fetch(`/api/users/${userId}`, {
+    method: "PUT",
+    headers: {
+      "content-type": "application/json",
+    },
+    body: JSON.stringify(formData),
+  })
+
+  // console.log(updatedData)
+
+  Swal.fire({
+    title: "Datos editados",
+    icon: "success",
+    confirmButtonText: "Ok",
+  }).then((result) => {
+    if (result.isConfirmed) {
+      closeModal()
+      window.location.reload()
+    }
+  })
+}
 
 function EditModal() {
-  const { closeModal } = useGlobalContext()
-  const [showPw, setShowPw] = useState(false)
+  const { editStudentId, closeModal } = useGlobalContext()
+  const [showPw, setShowPw] = useState<boolean>(false)
+  const [PW, setPW] = useState<string>("")
+  const [confirmPW, setConfirmPW] = useState<string>(" ")
 
   return (
     <div className="fixed left-0 right-0 w-screen h-screen z-20 flex items-center justify-center bg-slate-900/50 backdrop-blur-sm">
@@ -42,39 +59,41 @@ function EditModal() {
           </button>
         </div>
         <div className="p-6 space-y-6">
-          <form>
+          <form
+            onSubmit={(e) => handleEditSubmit(e, editStudentId, closeModal)}
+          >
             <div className="grid grid-cols-6 gap-6">
               <div className="col-span-6 sm:col-span-3">
                 <label
-                  htmlFor="first-name"
+                  htmlFor="first_name"
                   className="block mb-2 text-sm font-medium text-gray-900"
                 >
                   Primer Nombre
                 </label>
                 <input
                   type="text"
-                  name="first-name"
-                  id="first-name"
-                  className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5"
+                  name="first_name"
+                  id="first_name"
+                  className="shadow-sm focus:bg-myOrange-100 outline-none bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5"
                   placeholder="Bonnie"
-                  defaultValue={""}
+                  autoComplete="off"
                   required
                 />
               </div>
               <div className="col-span-6 sm:col-span-3">
                 <label
-                  htmlFor="last-name"
+                  htmlFor="last_name"
                   className="block mb-2 text-sm font-medium text-gray-900"
                 >
                   Primer Apellido
                 </label>
                 <input
                   type="text"
-                  name="last-name"
-                  id="last-name"
-                  className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5"
+                  name="last_name"
+                  id="last_name"
+                  className="shadow-sm focus:bg-myOrange-100 outline-none bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5"
                   placeholder="Clyde"
-                  defaultValue={""}
+                  autoComplete="off"
                   required
                 />
               </div>
@@ -100,17 +119,22 @@ function EditModal() {
                 </label>
                 <input
                   type={showPw ? "text" : "password"}
-                  name="new_pw"
                   id="new_pw"
-                  className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5"
+                  className={`shadow-sm bg-gray-50 border ${
+                    PW !== confirmPW
+                      ? "border-4 border-red-500"
+                      : "border-4 border-green-300"
+                  }text-gray-900 focus:bg-myOrange-100 outline-none sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 transition-colors`}
                   placeholder="********"
-                  defaultValue={""}
+                  onChange={(e) => setPW(e.target.value)}
+                  pattern="^(?=.*[A-Z])(?=.*\d).{8,}$"
+                  title="La contraseña debe incluir una mayuscula, un numero y debe ser de 8 caracteres minimo. "
                   required
                 />
               </div>
               <div className="col-span-6 sm:col-span-3">
                 <label
-                  htmlFor="position"
+                  htmlFor="password"
                   className="block mb-2 text-sm font-medium text-gray-900"
                 >
                   Confirma la contraseña{" "}
@@ -130,11 +154,19 @@ function EditModal() {
                 </label>
                 <input
                   type={showPw ? "text" : "password"}
-                  name="confirm_pw"
-                  id="confirm_pw"
-                  className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5"
-                  placeholder="********"
-                  defaultValue={""}
+                  name="password"
+                  id="password"
+                  className={`shadow-sm bg-gray-50 ${
+                    PW !== confirmPW
+                      ? "border-4 border-red-500"
+                      : "border-4 border-green-300"
+                  } text-gray-900 sm:text-sm rounded-lg outline-none focus:shadow-md focus:bg-myOrange-100 outline-none block w-full p-2.5 transition-all`}
+                  placeholder={`
+                    ${PW !== confirmPW ? "no coinciden" : ""}
+                  `}
+                  onChange={(e) => setConfirmPW(e.target.value)}
+                  pattern="^(?=.*[A-Z])(?=.*\d).{8,}$"
+                  title="La contraseña debe incluir una mayuscula, un numero y debe ser de 8 caracteres minimo. "
                   required
                 />
               </div>
@@ -148,9 +180,8 @@ function EditModal() {
                 <input
                   id="biography"
                   type="email"
-                  className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-primary-500 focus:border-primary-500"
+                  className="block focus:bg-myOrange-100 outline-none p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-primary-500 focus:border-primary-500"
                   placeholder="bonn1e@aec.org"
-                  defaultValue={""}
                 ></input>
               </div>
             </div>
