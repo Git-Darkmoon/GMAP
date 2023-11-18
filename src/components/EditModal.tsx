@@ -6,6 +6,16 @@ import VisibilityOffRoundedIcon from "@mui/icons-material/VisibilityOffRounded"
 import { FormEvent, useState } from "react"
 import Swal from "sweetalert2"
 
+const updateUser = async (userId: number, data: any) => {
+  await fetch(`/api/users/${userId}`, {
+    method: "PUT",
+    headers: {
+      "content-type": "application/json",
+    },
+    body: JSON.stringify(data),
+  })
+}
+
 const handleEditSubmit = async (
   e: FormEvent<HTMLFormElement>,
   userId: number,
@@ -15,17 +25,7 @@ const handleEditSubmit = async (
   const formData = new FormData(e.currentTarget)
   const updatedData = Object.fromEntries(formData)
 
-  const { first_name, last_name, password } = updatedData
-
-  await fetch(`/api/users/${userId}`, {
-    method: "PUT",
-    headers: {
-      "content-type": "application/json",
-    },
-    body: JSON.stringify(formData),
-  })
-
-  // console.log(updatedData)
+  updateUser(userId, updatedData)
 
   Swal.fire({
     title: "Datos editados",
@@ -74,7 +74,7 @@ function EditModal() {
                   type="text"
                   name="first_name"
                   id="first_name"
-                  className="shadow-sm focus:bg-myOrange-100 outline-none bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5"
+                  className="shadow-sm focus:bg-myOrange-100 outline-none bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 transition-colors"
                   placeholder="Bonnie"
                   autoComplete="off"
                   required
@@ -91,7 +91,7 @@ function EditModal() {
                   type="text"
                   name="last_name"
                   id="last_name"
-                  className="shadow-sm focus:bg-myOrange-100 outline-none bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5"
+                  className="shadow-sm focus:bg-myOrange-100 outline-none bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 transition-colors"
                   placeholder="Clyde"
                   autoComplete="off"
                   required
@@ -160,7 +160,7 @@ function EditModal() {
                     PW !== confirmPW
                       ? "border-4 border-red-500"
                       : "border-4 border-green-300"
-                  } text-gray-900 sm:text-sm rounded-lg outline-none focus:shadow-md focus:bg-myOrange-100 outline-none block w-full p-2.5 transition-all`}
+                  } text-gray-900 sm:text-sm rounded-lg outline-none focus:shadow-md focus:bg-myOrange-100 block w-full p-2.5 transition-all`}
                   placeholder={`
                     ${PW !== confirmPW ? "no coinciden" : ""}
                   `}
@@ -180,7 +180,8 @@ function EditModal() {
                 <input
                   id="biography"
                   type="email"
-                  className="block focus:bg-myOrange-100 outline-none p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-primary-500 focus:border-primary-500"
+                  name="email"
+                  className="block focus:bg-myOrange-100 outline-none p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-primary-500 focus:border-primary-500 transition-colors"
                   placeholder="bonn1e@aec.org"
                 ></input>
               </div>
