@@ -31,19 +31,17 @@ export async function GET(request: NextRequest, { params }: any) {
 export async function PUT(request: NextRequest, { params }: any) {
   const body = await request.json()
 
-  const { first_name, last_name, email, password, team, course_check } = body
+  const { first_name, last_name, email, password } = body
 
   try {
     const singleGetQuery =
-      "UPDATE maratonistas SET first_name = $1, last_name = $2, email = $3, password = $4, team = $5, course_check = $6 WHERE student_id = $7 RETURNING *"
+      "UPDATE maratonistas SET first_name = $1, last_name = $2, email = $3, password = $4 WHERE student_id = $5 RETURNING *"
     const studentToModify = [params.student_id]
     const values = [
       first_name,
       last_name,
       email,
       password,
-      team,
-      course_check,
       Number(studentToModify),
     ]
     const response = await connection.query(singleGetQuery, values)
