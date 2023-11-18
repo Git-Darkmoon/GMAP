@@ -2,7 +2,6 @@
 
 import HomeIcon from "@mui/icons-material/Home"
 import KeyboardArrowRightRoundedIcon from "@mui/icons-material/KeyboardArrowRightRounded"
-import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined"
 import TableRowEl from "@/components/TableRowEl"
 import { Maratonista } from "@/utils/userType"
 import TableHeadEl from "@/components/TableHeadEl"
