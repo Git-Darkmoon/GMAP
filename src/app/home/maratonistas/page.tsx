@@ -9,7 +9,7 @@ import { useEffect, useState } from "react"
 import EditModal from "@/components/EditModal"
 import { useGlobalContext } from "@/utils/context"
 
-function HomePage() {
+function MaratonistasPage() {
   const { isModalOpen } = useGlobalContext()
 
   const [maratonistas, setMaratonistas] = useState<Maratonista[]>([])
@@ -141,4 +141,4 @@ function HomePage() {
     </main>
   )
 }
-export default HomePage
+export default MaratonistasPage
