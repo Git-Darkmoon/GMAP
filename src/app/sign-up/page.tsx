@@ -30,7 +30,7 @@ const handleSubmit = async (e: FormEvent<HTMLFormElement>, router: any) => {
       confirmButtonText: "Ok",
     }).then((result) => {
       if (result.isConfirmed) {
-        router.push("/")
+        router.push("/news")
       }
     })
   } catch (error) {
