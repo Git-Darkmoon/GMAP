@@ -3,6 +3,8 @@
 import Image from "next/image"
 import GitHubIcon from "@mui/icons-material/GitHub"
 import GoogleIcon from "@mui/icons-material/Google"
+import VisibilityRoundedIcon from "@mui/icons-material/VisibilityRounded"
+import VisibilityOffRoundedIcon from "@mui/icons-material/VisibilityOffRounded"
 import Link from "next/link"
 import { FormEvent, useState } from "react"
 import { useRouter } from "next/navigation"
@@ -20,7 +22,7 @@ const handleSubmit = async (
     const singleUser = await response.json()
 
     if (PW === singleUser?.data?.password) {
-      router.push("/home")
+      router.push("/home/news")
     } else {
       Swal.fire({
         title: "Datos invalidos",
@@ -40,6 +42,7 @@ const handleSubmit = async (
 function LoginPage() {
   const [ID, setID] = useState<string | number>("")
   const [PW, setPW] = useState<string>("")
+  const [showPw, setShowPw] = useState<boolean>(false)
   const router = useRouter()
 
   return (
@@ -94,12 +97,25 @@ function LoginPage() {
                   className="block mt-4 text-sm text-slate-500"
                   htmlFor="login_password"
                 >
-                  Contraseña
+                  Contraseña{" "}
+                  {showPw ? (
+                    <VisibilityRoundedIcon
+                      fontSize="small"
+                      className="ml-2 text-slate-400 cursor-pointer"
+                      onClick={() => setShowPw(!showPw)}
+                    />
+                  ) : (
+                    <VisibilityOffRoundedIcon
+                      fontSize="small"
+                      className="ml-2 text-slate-400 cursor-pointer"
+                      onClick={() => setShowPw(!showPw)}
+                    />
+                  )}
                 </label>
                 <input
                   id="login_password"
                   className="w-full px-4 py-2 text-sm text-slate-500 border rounded-md focus:border-myOrange-400 focus:outline-none focus:ring-1 focus:ring-myOrange-500 focus:shadow-md"
-                  type="password"
+                  type={showPw ? "text" : "password"}
                   onChange={(e) => setPW(e.target.value)}
                   placeholder="********"
                   pattern="^(?=.*[A-Z])(?=.*\d).{8,}$"
