@@ -1,7 +1,10 @@
+"use client"
+
 import HomeRoundedIcon from "@mui/icons-material/HomeRounded"
 import Groups2RoundedIcon from "@mui/icons-material/Groups2Rounded"
-// import ManageAccountsRoundedIcon from "@mui/icons-material/ManageAccountsRounded"
+import LogoutIcon from "@mui/icons-material/Logout"
 import SidebarEl, { SidebarElType } from "./SidebarEl"
+import { useGlobalContext } from "@/utils/context"
 
 const sidebarElements: SidebarElType[] = [
   {
@@ -16,18 +19,23 @@ const sidebarElements: SidebarElType[] = [
     text: "Maratonistas",
     path: "/home/maratonistas",
   },
-  // {
-  //   id: 3,
-  //   icon: <ManageAccountsRoundedIcon />,
-  //   text: "Perfil",
-  // },
+  {
+    id: 3,
+    icon: <LogoutIcon />,
+    text: "Log out",
+    path: "/",
+  },
 ]
 
 function Sidebar() {
+  const { isSidebarOpen } = useGlobalContext()
+
   return (
     <aside
       id="sidebar"
-      className="fixed top-0 left-0 z-20 hidden lg:flex flex-col flex-shrink-0 w-64 h-full pt-16 font-normal duration-75 transition-width"
+      className={`fixed top-0 left-0 z-20 ${
+        isSidebarOpen ? "visible" : "hidden"
+      } lg:flex flex-col flex-shrink-0 w-64 h-full pt-16 font-normal duration-75 transition-width`}
       aria-label="Sidebar"
     >
       <div className="relative flex flex-col flex-1 min-h-0 pt-0 bg-white border-r border-slate-200">
