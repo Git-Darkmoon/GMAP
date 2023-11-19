@@ -4,16 +4,30 @@ import { useGlobalContext } from "@/utils/context"
 import { Maratonista } from "@/utils/myTypes"
 import Swal from "sweetalert2"
 
-const handleDelete = async (userId: number) => {
+const deleteUser = async (userId: number) => {
   await fetch(`/api/users/${userId}`, {
     method: "DELETE",
   })
+}
+
+const handleDelete = (userId: number) => {
   Swal.fire({
-    title: "Usuario eliminado",
-    icon: "success",
-    confirmButtonText: "Ok",
+    title: "Estás segur@?",
+    text: "Eliminar al maratonista hará que pierda acceso a la plataforma!",
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonColor: "#ffb733",
+    cancelButtonColor: "#c12f2f",
+    confirmButtonText: "Si, eliminar",
+    cancelButtonText: "Cancelar",
   }).then((result) => {
     if (result.isConfirmed) {
+      deleteUser(userId)
+      Swal.fire({
+        title: "Eliminado!",
+        text: "El maratonista fue eliminado.",
+        icon: "success",
+      })
       window.location.reload()
     }
   })
@@ -30,7 +44,7 @@ function TableRowEl({
   const { openModal, setEditStudentId } = useGlobalContext()
 
   return (
-    <tr className="bg-white border-b hover:bg-myOrange-50 transition-colors">
+    <tr className="bg-myOrange-50 border-b hover:bg-myOrange-100 transition-colors">
       <th
         scope="row"
         className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap text-center"
