@@ -1,3 +1,5 @@
+import { StaticImageData } from "next/image"
+
 export type Maratonista = {
   student_id: number
   first_name: string
@@ -9,4 +11,10 @@ export type Maratonista = {
     | "programacion basica"
     | "programacion orientada a objetos"
     | "programacion avanzada"
+}
+
+export type News = {
+  image: StaticImageData | string
+  title: string
+  desc: string
 }
