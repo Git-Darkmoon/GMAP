@@ -14,6 +14,7 @@ export type Maratonista = {
 }
 
 export type News = {
+  id: number
   image: StaticImageData | string
   title: string
   desc: string
