@@ -3,7 +3,9 @@
 import Image from "next/image"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
-import { FormEvent } from "react"
+import { FormEvent, useState } from "react"
+import VisibilityRoundedIcon from "@mui/icons-material/VisibilityRounded"
+import VisibilityOffRoundedIcon from "@mui/icons-material/VisibilityOffRounded"
 import Swal from "sweetalert2"
 
 async function createUser(maratonista: any) {
@@ -30,7 +32,7 @@ const handleSubmit = async (e: FormEvent<HTMLFormElement>, router: any) => {
       confirmButtonText: "Ok",
     }).then((result) => {
       if (result.isConfirmed) {
-        router.push("/news")
+        router.push("/")
       }
     })
   } catch (error) {
@@ -50,6 +52,7 @@ const signatures: string[] = [
 
 function RegisterPage() {
   const router = useRouter()
+  const [showPw, setShowPw] = useState<boolean>(false)
 
   return (
     <section className="w-full h-screen flex flex-col items-center justify-center">
@@ -70,9 +73,9 @@ function RegisterPage() {
           backdropFilter: "blur(30px)",
         }}
       >
-        <div className="pb-12">
-          <div className="max-w-lg">
-            <picture className="w-full flex justify-center py-4">
+        <div className="py-6">
+          <div className="max-w-sm lg:max-w-lg">
+            <picture className="w-full hidden lg:flex justify-center py-4">
               <Image
                 src={"/GMAP_logo_withouthBg.webp"}
                 alt="GMAP logo"
@@ -81,15 +84,15 @@ function RegisterPage() {
                 priority
               />
             </picture>
-            <h2 className="text-3xl text-center font-semibold mb-5 text-slate-800">
+            <h2 className="text-2xl lg:text-3xl text-center font-semibold mb-5 text-slate-800">
               Registrate Ahora
             </h2>
             <form
               className="space-y-3"
               onSubmit={(e) => handleSubmit(e, router)}
             >
-              <div className="flex space-x-4 flex-wrap">
-                <div className="flex-1">
+              <div className="flex gap-2 md:gap-4 flex-wrap">
+                <div className="basis-full lg:flex-1">
                   <label
                     htmlFor="student_id"
                     className="block text-sm font-medium text-gray-700"
@@ -101,6 +104,7 @@ function RegisterPage() {
                     id="student_id"
                     name="student_id"
                     placeholder="20181020172"
+                    autoComplete={"off"}
                     className={inputStyle}
                     pattern="^[1-9]\d*$"
                     required
@@ -118,6 +122,7 @@ function RegisterPage() {
                     id="first_name"
                     name="first_name"
                     placeholder="Pedro"
+                    autoComplete={"off"}
                     className={inputStyle}
                     required
                   />
@@ -134,6 +139,7 @@ function RegisterPage() {
                     id="last_name"
                     name="last_name"
                     placeholder="Martinez"
+                    autoComplete={"off"}
                     className={inputStyle}
                     required
                   />
@@ -159,10 +165,23 @@ function RegisterPage() {
                 htmlFor="password"
                 className="block text-sm font-medium text-gray-700"
               >
-                Contraseña
+                Contraseña{" "}
+                {showPw ? (
+                  <VisibilityRoundedIcon
+                    fontSize="small"
+                    className="ml-2 text-slate-500 cursor-pointer"
+                    onClick={() => setShowPw(!showPw)}
+                  />
+                ) : (
+                  <VisibilityOffRoundedIcon
+                    fontSize="small"
+                    className="ml-2 text-slate-500 cursor-pointer"
+                    onClick={() => setShowPw(!showPw)}
+                  />
+                )}
               </label>
               <input
-                type="password"
+                type={showPw ? "text" : "password"}
                 id="password"
                 name="password"
                 placeholder="********"
@@ -171,14 +190,14 @@ function RegisterPage() {
               />
               <div>
                 <Link
-                  className="text-sm space-y-4 text-myOrange-500 hover:underline hover:text-myOrange-600"
+                  className="text-sm text-myOrange-500 hover:underline hover:text-myOrange-600"
                   href="/"
                 >
                   Ya tienes cuenta ?
                 </Link>
               </div>
 
-              <div className="flex space-x-4 flex-wrap">
+              <div className="flex gap-2 md:gap-4 flex-wrap">
                 <div className="flex-1 ">
                   <label
                     htmlFor="team"
@@ -194,7 +213,7 @@ function RegisterPage() {
                     ))}
                   </select>
                 </div>
-                <div className="flex-1 basis-16">
+                <div className="flex-1 basis-full lg:basis-16">
                   <label
                     htmlFor="course_check"
                     className="block text-sm font-medium text-gray-700"
