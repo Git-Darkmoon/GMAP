@@ -1,7 +1,7 @@
 "use client"
 
 import { useGlobalContext } from "@/utils/context"
-import { Maratonista } from "@/utils/userType"
+import { Maratonista } from "@/utils/myTypes"
 import Swal from "sweetalert2"
 
 const handleDelete = async (userId: number) => {
