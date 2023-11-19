@@ -57,7 +57,7 @@ function RegisterPage() {
         <Image
           src={"/SignUp_imageSun.webp"}
           alt="sunset sign up"
-          className="block bg-cover"
+          className="block bg-cover -z-10"
           fill={true}
           priority
         />
