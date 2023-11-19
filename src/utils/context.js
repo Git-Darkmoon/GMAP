@@ -6,6 +6,7 @@ const AppContext = createContext()
 
 export function AppProvider({ children }) {
   const [isModalOpen, setIsModalOpen] = useState(false)
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false)
   const [editStudentId, setEditStudentId] = useState()
 
   function openModal() {
@@ -14,6 +15,9 @@ export function AppProvider({ children }) {
   function closeModal() {
     setIsModalOpen(false)
   }
+  function toggleSidebar() {
+    setIsSidebarOpen(!isSidebarOpen)
+  }
 
   return (
     <AppContext.Provider
@@ -21,6 +25,8 @@ export function AppProvider({ children }) {
         isModalOpen,
         openModal,
         closeModal,
+        toggleSidebar,
+        isSidebarOpen,
         editStudentId,
         setEditStudentId,
       }}
