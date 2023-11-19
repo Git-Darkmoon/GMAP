@@ -1,6 +1,7 @@
 import Image from "next/image"
 import MenuRoundedIcon from "@mui/icons-material/MenuRounded"
 import NightsStayRoundedIcon from "@mui/icons-material/NightsStayRounded"
+import GitHubIcon from "@mui/icons-material/GitHub"
 import Link from "next/link"
 
 const Navbar = () => {
@@ -14,7 +15,10 @@ const Navbar = () => {
       >
         <MenuRoundedIcon />
       </button>
-      <Link href="/home" className="flex items-center justify-center gap-2">
+      <Link
+        href="/home/news"
+        className="flex items-center justify-center gap-2"
+      >
         <Image
           src={"/GMAP_logo_withouthBg.webp"}
           width={150}
@@ -29,14 +33,13 @@ const Navbar = () => {
       </Link>
 
       <div className="flex items-center">
-        <button
-          id="theme-toggle"
-          data-tooltip-target="tooltip-toggle"
-          type="button"
-          className="text-slate-600  hover:bg-gray-100 focus:outline-none focus:ring-4 focus:ring-gray-200 rounded-lg text-sm p-2.5"
+        <a
+          href={"https://github.com/Git-Darkmoon/GMAP"}
+          className="flex justify-center items-center gap-2 text-slate-600  hover:bg-gray-100 focus:outline-none focus:ring-4 focus:ring-gray-200 rounded-lg text-sm p-2.5"
         >
-          <NightsStayRoundedIcon />
-        </button>
+          <GitHubIcon />
+          <p className="hidden md:block">Github Repository</p>
+        </a>
       </div>
     </nav>
   )
