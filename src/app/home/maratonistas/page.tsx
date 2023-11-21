@@ -1,7 +1,5 @@
 "use client"
 
-import HomeIcon from "@mui/icons-material/Home"
-import KeyboardArrowRightRoundedIcon from "@mui/icons-material/KeyboardArrowRightRounded"
 import TableRowEl from "@/components/TableRowEl"
 import { Maratonista } from "@/utils/myTypes"
 import TableHeadEl from "@/components/TableHeadEl"
@@ -12,7 +10,6 @@ import HomeHeader from "@/components/HomeHeader"
 
 function MaratonistasPage() {
   const { isModalOpen } = useGlobalContext()
-
   const [maratonistas, setMaratonistas] = useState<Maratonista[]>([])
 
   useEffect(() => {
