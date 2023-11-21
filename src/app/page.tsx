@@ -86,6 +86,8 @@ function LoginPage() {
                 <input
                   id="login_id"
                   type="number"
+                  inputMode="numeric"
+                  pattern="[0-9]*"
                   className="w-full px-4 py-2 text-sm text-slate-500 border rounded-md focus:border-myOrange-400 focus:outline-none focus:ring-1 focus:ring-myOrange-500 focus:shadow-md"
                   placeholder="20181020172"
                   onChange={(e) => setID(e.target.value)}

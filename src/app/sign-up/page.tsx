@@ -153,6 +153,7 @@ function RegisterPage() {
                     id="student_id"
                     name="student_id"
                     placeholder="20181020172"
+                    inputMode="numeric"
                     autoComplete={"off"}
                     className={`${inputStyle} ${
                       IDValidation.length !== 11
