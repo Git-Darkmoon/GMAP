@@ -3,10 +3,33 @@
 import Image from "next/image"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
-import { FormEvent, useState } from "react"
+import { FormEvent, useEffect, useState } from "react"
 import VisibilityRoundedIcon from "@mui/icons-material/VisibilityRounded"
 import VisibilityOffRoundedIcon from "@mui/icons-material/VisibilityOffRounded"
 import Swal from "sweetalert2"
+import { useGlobalContext } from "@/utils/context"
+
+// This algorithm has O(n log n) time complexity
+// this handles the availability of teams on sign-up.
+function checkAvailability(arr: number[]): number[] {
+  const frequencyMap: { [key: number]: number } = {}
+
+  // Count the frequency of each element
+  for (const num of arr) {
+    frequencyMap[num] = (frequencyMap[num] || 0) + 1
+  }
+
+  const result: number[] = []
+
+  for (let num = 1; num <= 9; num++) {
+    // Add the number to the result if it doesn't violate the constraint
+    for (let i = 0; i < Math.min(3 - (frequencyMap[num] || 0), 1); i++) {
+      result.push(num)
+    }
+  }
+
+  return result
+}
 
 async function createUser(maratonista: any) {
   await fetch(`/api/users`, {
@@ -20,6 +43,7 @@ async function createUser(maratonista: any) {
 
 const handleSubmit = async (e: FormEvent<HTMLFormElement>, router: any) => {
   e.preventDefault()
+
   const formData = new FormData(e.currentTarget)
   const newUser = Object.fromEntries(formData)
 
@@ -43,7 +67,6 @@ const handleSubmit = async (e: FormEvent<HTMLFormElement>, router: any) => {
 const inputStyle: string =
   "mt-1 p-2 w-full border rounded-md text-slate-600 focus:border-myOrange-400 focus:outline-none focus:ring-1 focus:ring-myOrange-500 focus:shadow-md"
 
-const teams: number[] = [1, 2, 3, 4, 5, 6, 7, 8, 9]
 const signatures: string[] = [
   "programacion basica",
   "programacion orientada a objetos",
@@ -53,6 +76,32 @@ const signatures: string[] = [
 function RegisterPage() {
   const router = useRouter()
   const [showPw, setShowPw] = useState<boolean>(false)
+  const [IDValidation, setIDValidation] = useState<string>("")
+  const { availableTeams, setAvailableTeams } = useGlobalContext()
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch("/api/users")
+        if (!response.ok) {
+          throw new Error("Network response was not ok")
+        }
+
+        const users = await response.json()
+        const fetchedTeams = users.data.map((user: any) => {
+          return user.team
+        })
+
+        setAvailableTeams(checkAvailability(fetchedTeams))
+      } catch (error) {
+        console.error("Error fetching data:", error)
+      }
+    }
+
+    fetchData()
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []) // The empty dependency array ensures that this effect runs once after the initial render
 
   return (
     <section className="w-full h-screen flex flex-col items-center justify-center">
@@ -105,8 +154,14 @@ function RegisterPage() {
                     name="student_id"
                     placeholder="20181020172"
                     autoComplete={"off"}
-                    className={inputStyle}
-                    pattern="^[1-9]\d*$"
+                    className={`${inputStyle} ${
+                      IDValidation.length !== 11
+                        ? "border-4 border-red-500"
+                        : "border-4 border-green-300"
+                    } focus:border-transparent`}
+                    onChange={(e) => setIDValidation(e.target.value)}
+                    pattern="^[1-9]\d{10}$"
+                    title="El codigo estudiantil se compone de 11 digitos."
                     required
                   />
                 </div>
@@ -186,6 +241,8 @@ function RegisterPage() {
                 name="password"
                 placeholder="********"
                 className={inputStyle}
+                pattern="^(?=.*[A-Z])(?=.*\d).{8,}$"
+                title="La contraseña debe incluir una mayuscula, un numero y debe ser de 8 caracteres minimo. "
                 required
               />
               <div>
@@ -206,7 +263,7 @@ function RegisterPage() {
                     Equipo
                   </label>
                   <select id="team" name="team" className={inputStyle} required>
-                    {teams.map((team) => (
+                    {availableTeams.map((team: number) => (
                       <option key={team} value={team}>
                         {team}
                       </option>
@@ -253,7 +310,10 @@ function RegisterPage() {
 
               <button
                 type="submit"
-                className="bg-myOrange-500 transition-colors w-full text-white px-4 py-2 rounded-md hover:bg-myOrange-600 focus:border-myOrange-100 focus:outline-none focus:ring-1 focus:ring-myOrange-300 focus:shadow-md"
+                disabled={IDValidation.length !== 11}
+                className={`bg-myOrange-500 transition-colors w-full text-white px-4 py-2 rounded-md hover:bg-myOrange-600 focus:border-myOrange-100 focus:outline-none focus:ring-1 focus:ring-myOrange-300 focus:shadow-md ${
+                  IDValidation.length !== 11 ? "cursor-not-allowed" : ""
+                }`}
               >
                 Registrarse
               </button>

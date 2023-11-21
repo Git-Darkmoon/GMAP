@@ -8,6 +8,7 @@ export function AppProvider({ children }) {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [isSidebarOpen, setIsSidebarOpen] = useState(false)
   const [editStudentId, setEditStudentId] = useState()
+  const [availableTeams, setAvailableTeams] = useState([])
 
   function openModal() {
     setIsModalOpen(true)
@@ -29,6 +30,8 @@ export function AppProvider({ children }) {
         isSidebarOpen,
         editStudentId,
         setEditStudentId,
+        availableTeams,
+        setAvailableTeams,
       }}
     >
       {children}
