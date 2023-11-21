@@ -46,7 +46,7 @@ function EditModal() {
   const [confirmPW, setConfirmPW] = useState<string>(" ")
 
   return (
-    <div className="fixed left-0 right-0 w-screen h-screen z-20 flex items-center justify-center bg-slate-900/50 backdrop-blur-sm">
+    <div className="fixed left-0 right-0 w-screen h-screen z-50 flex items-center justify-center bg-slate-900/50 backdrop-blur-sm">
       <article className="relative bg-white rounded-lg shadow">
         <div className="flex items-start justify-between p-5 border-b rounded-t">
           <h3 className="text-xl font-semibold">Edit user</h3>
